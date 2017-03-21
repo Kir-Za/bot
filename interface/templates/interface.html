@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Базовая страница</title>
+</head>
+<body>
+<form action="" method="post">
+    {% csrf_token %}
+    <label for="common_interface_field"></label>
+    <input id="main_field" type="text" name="main_field" maxlength="50">
+    <input type="hidden" value={{ user_name }} name="ex_user_name" >
+    <p>
+        <input type="submit" value="Enter">
+    </p>
+</form>
+</body>
+</html>

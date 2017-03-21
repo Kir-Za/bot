@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 
 class OrdinaryUser(User, models.Model):
-    gender = models.BooleanField(verbose_name='Пол (м. -1)')
-    age = models.PositiveSmallIntegerField(verbose_name='Возраст')
+    gender = models.BooleanField(verbose_name='Пол (м. -1)', blank=True)
+    age = models.PositiveSmallIntegerField(verbose_name='Возраст', blank=True, null=True)
     '''
     favorite_news_theme = models.ManyToManyField(
         'newsblog.Themes',
