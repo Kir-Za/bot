@@ -6,3 +6,4 @@ media/*
 
 interface/migrations/*
 log_files/
+notes/migrations/

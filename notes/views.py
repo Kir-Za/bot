@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.db.models import Q
 from django.views.generic import FormView, TemplateView, View, ListView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from .models import MyNote
 from .forms import SearchForm
 
@@ -12,8 +13,7 @@ class SearchAPI(FormView):
         form = SearchForm(request.POST)
         if form.is_valid():
             search_key = form.cleaned_data['search_field']
-            # return render(request, self.template_name)
-            return redirect('note_page')
+            return redirect(reverse('note_page', kwargs={'keys': search_key}))
         else:
             return redirect('note_page')
 
@@ -24,5 +24,15 @@ class CommonNoteView(ListView):
     queryset = MyNote.objects.order_by('-time_add')
 
     def get_queryset(self):
-        return MyNote.objects.all()
+        if self.kwargs['keys'] == 'last':
+            return MyNote.objects.order_by('-time_add')
+        else:
+            keys_list = self.kwargs['keys'].split(' ')
+            search = []
+            for element in keys_list:
+                search.append('Q(keys__contains="'+element+'")|')
+            search[-1] = search[-1].strip('|')
+            search_str = ''.join(search)
+            search_str = 'MyNote.objects.filter('+search_str+')'
+            return eval(search_str)
 
