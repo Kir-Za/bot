@@ -1,9 +1,8 @@
 .idea*
 __py*
 migrations/*
-*.log
 media/*
 *.pyc
 
 interface/migrations/*
-log_files/*
+log_files/
