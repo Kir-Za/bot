@@ -2,6 +2,7 @@
 {% block list %}
     <p>Список.</p>
     <p>
+    {% if note_list %}
         {% for note in note_list %}
             <p>
                 {{ note.title }}
@@ -9,5 +10,8 @@
                 {{ note.text_body }}
             </p>
         {% endfor %}
+    {%  else %}
+        <p>Поиск результатов не дал</p>
+    {% endif %}
     </p>
 {% endblock %}

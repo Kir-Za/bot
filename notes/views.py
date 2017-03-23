@@ -1,12 +1,12 @@
-from django.shortcuts import render
 from django.db.models import Q
 from django.views.generic import FormView, TemplateView, View, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, reverse
 from .models import MyNote
 from .forms import SearchForm
 
 
-class SearchAPI(FormView):
+class SearchAPI(LoginRequiredMixin, FormView):
     form_class = SearchForm
 
     def post(self, request):
@@ -18,7 +18,7 @@ class SearchAPI(FormView):
             return redirect('note_page')
 
 
-class CommonNoteView(ListView):
+class CommonNoteView(LoginRequiredMixin, ListView):
     template_name = 'work_space.html'
     context_object_name = 'note_list'
     queryset = MyNote.objects.order_by('-time_add')
@@ -35,4 +35,3 @@ class CommonNoteView(ListView):
             search_str = ''.join(search)
             search_str = 'MyNote.objects.filter('+search_str+')'
             return eval(search_str)
-

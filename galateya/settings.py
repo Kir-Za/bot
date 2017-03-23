@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # project application
     'interface',
     'notes',
+    'secretary',
 ]
 
 MIDDLEWARE = [
