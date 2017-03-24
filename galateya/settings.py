@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'galateya.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DB_LOCAL_NAME = 'gal'
+DB_LOCAL_NAME = 'gal_set'
 DB_USER = 'gal'
 DB_PASSWORD = '123'
 DB_HOST = 'localhost'

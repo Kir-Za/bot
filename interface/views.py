@@ -1,6 +1,6 @@
 from logging import getLogger
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import FormView, TemplateView, View
 from django.core.exceptions import ObjectDoesNotExist
@@ -23,7 +23,7 @@ class MainView(FormView):
                     OrdinaryUser.objects.get(username=main_field)
                     return render(request, self.template_name, context={"user_name": main_field})
                 except ObjectDoesNotExist:
-                    return redirect('login_page')
+                    return redirect(reverse('login_page'))
                 except Exception as err:
                     file_logger.error(err)
             else:
@@ -33,10 +33,10 @@ class MainView(FormView):
                 if user is not None:
                     if user.is_active:
                         login(request, user)
-                        return redirect('/menu/')
+                        return redirect(reverse('menu_page'))
                 else:
-                    return redirect('login_page')
-        return redirect('login_page')
+                    return redirect(reverse('login_page'))
+        return redirect(reverse('login_page'))
 
 
 class MenuView(LoginRequiredMixin, TemplateView):
@@ -52,4 +52,4 @@ class MenuView(LoginRequiredMixin, TemplateView):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('login_page')
+        return redirect(reverse('login_page'))
