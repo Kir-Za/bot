@@ -1,9 +1,11 @@
 from django.db.models import Q
-from django.views.generic import FormView, TemplateView, View, ListView
+from django.views.generic import FormView, TemplateView, View, ListView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, reverse
+from django.core.urlresolvers import reverse_lazy
 from .models import MyNote
 from .forms import SearchForm
+from interface.models import OrdinaryUser
 
 
 class SearchAPI(LoginRequiredMixin, FormView):
@@ -35,3 +37,17 @@ class CommonNoteView(LoginRequiredMixin, ListView):
             search_str = ''.join(search)
             search_str = 'MyNote.objects.filter('+search_str+')'
             return eval(search_str)
+
+
+class AddNoteView(LoginRequiredMixin, CreateView):
+    template_name = 'remider.html'
+    model = MyNote
+    fields = ['title', 'keys', 'text_body']
+    success_url = reverse_lazy('menu_page')
+
+    def form_valid(self, form):
+        form.instance.customer = OrdinaryUser.objects.get(username=self.request.user)
+        form.instance.title = self.request.POST['title']
+        form.instance.keys = self.request.POST['keys']
+        form.instance.text_body = self.request.POST['text_body']
+        return super(AddNoteView, self).form_valid(form)

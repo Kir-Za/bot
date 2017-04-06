@@ -3,7 +3,7 @@ from django.db import models
 
 class Reminder(models.Model):
     time = models.DateTimeField(verbose_name='Время срабатывания')
-    note = models.CharField(max_length=511, verbose_name='Текс напоминания')
+    note = models.CharField(max_length=511, verbose_name='Текст напоминания')
     customer = models.ForeignKey('interface.OrdinaryUser', on_delete=models.CASCADE, related_name='remember')
     status = models.BooleanField(default=True, verbose_name='Актуальность напоминания')
 
