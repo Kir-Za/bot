@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.views.generic import FormView, ListView, CreateView, DetailView
+from django.views.generic import FormView, ListView, CreateView, DetailView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, reverse
 from django.core.urlresolvers import reverse_lazy
@@ -56,7 +56,8 @@ class AddNoteView(LoginRequiredMixin, CreateView):
 class DeatilNoteView(LoginRequiredMixin, DetailView):
     template_name = 'detail.html'
     model = MyNote
-    '''
-    def get_queryset(self):
-        return MyNote.objects.get(id=self.kwargs['pk'])
-    '''
+
+
+class RemoveNoteView(LoginRequiredMixin, DeleteView):
+    model = MyNote
+    success_url = reverse_lazy('menu_page')
