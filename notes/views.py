@@ -1,7 +1,7 @@
 from django.db.models import Q
-from django.views.generic import FormView, TemplateView, View, ListView, CreateView
+from django.views.generic import FormView, ListView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import redirect, reverse
 from django.core.urlresolvers import reverse_lazy
 from .models import MyNote
 from .forms import SearchForm
@@ -51,3 +51,12 @@ class AddNoteView(LoginRequiredMixin, CreateView):
         form.instance.keys = self.request.POST['keys']
         form.instance.text_body = self.request.POST['text_body']
         return super(AddNoteView, self).form_valid(form)
+
+
+class DeatilNoteView(LoginRequiredMixin, DetailView):
+    template_name = 'detail.html'
+    model = MyNote
+    '''
+    def get_queryset(self):
+        return MyNote.objects.get(id=self.kwargs['pk'])
+    '''
