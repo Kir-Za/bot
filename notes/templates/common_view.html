@@ -5,13 +5,18 @@
     <title>Title</title>
 </head>
 <body>
-<form action="../../search_api/" method="post">
+<form action="{% url "serach_api" %}" method="post">
     {% csrf_token %}
     <label for="common_interface_field"></label>
     <input id="search_field" type="text" name="search_field" maxlength="50">
     <input type="submit" value="Поиск">
+    <hr>
     {% block list %}
     {% endblock %}
+</form>
+<hr>
+<form action="{% url "note_add" %}">
+    <button type="submit">ADD</button>
 </form>
 </body>
 </html>

@@ -15,9 +15,9 @@ class SearchAPI(LoginRequiredMixin, FormView):
         form = SearchForm(request.POST)
         if form.is_valid():
             search_key = form.cleaned_data['search_field']
-            return redirect(reverse('note_page', kwargs={'keys': search_key}))
+            return redirect(reverse('note_list', kwargs={'keys': search_key}))
         else:
-            return redirect('note_page')
+            return redirect('note_list', kwargs={'keys': 'last'})
 
 
 class CommonNoteView(LoginRequiredMixin, ListView):
@@ -43,7 +43,7 @@ class AddNoteView(LoginRequiredMixin, CreateView):
     template_name = 'remider.html'
     model = MyNote
     fields = ['title', 'keys', 'text_body']
-    success_url = reverse_lazy('menu_page')
+    success_url = reverse_lazy('note_list', kwargs={'keys': 'last'})
 
     def form_valid(self, form):
         form.instance.customer = OrdinaryUser.objects.get(username=self.request.user)
@@ -60,4 +60,4 @@ class DeatilNoteView(LoginRequiredMixin, DetailView):
 
 class RemoveNoteView(LoginRequiredMixin, DeleteView):
     model = MyNote
-    success_url = reverse_lazy('menu_page')
+    success_url = reverse_lazy('note_list', kwargs={'keys': 'last'})

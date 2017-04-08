@@ -1,37 +1,37 @@
-from django.test import TestCase, Client, utils
+from django.test import TestCase, Client
 from django.db import transaction
+from django.core.urlresolvers import reverse_lazy, reverse
 from interface.models import OrdinaryUser
 
 
-class InterfaceRedirectTest(TestCase):
+class InterfaceViewTest(TestCase):
     def setUp(self):
         user = OrdinaryUser.objects.create_user(username='Dummy', password='123')
 
     def test_main_view_neg(self):
         client_obj = Client()
-        response = client_obj.post('/login/', {'main_field': 'bad_user'})
+        response = client_obj.post(reverse_lazy('login_page'), {'main_field': 'bad_user'})
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/login/')
+        self.assertEqual(response.url, reverse('login_page'))
 
     def test_main_view_pos(self):
         client_obj = Client()
-        response = client_obj.post('/login/', {'main_field': 'Dummy'})
+        response = client_obj.post(reverse_lazy('login_page'), {'main_field': 'Dummy'})
         self.assertEqual(response.status_code, 200)
 
     def test__main_view_pos_next(self):
         client_obj = Client()
-        response = client_obj.post('/login/', {'main_field': '123', 'ex_user_name': 'Dummy'})
-        self.assertEqual(response.url, '/menu/')
+        response = client_obj.post(reverse_lazy('login_page'), {'main_field': '123', 'ex_user_name': 'Dummy'})
+        self.assertEqual(response.url, reverse('menu_page'))
 
     def test_menu_login_pos(self):
         client_obj = Client()
         with transaction.atomic():
             client_obj.login(username='Dummy', password='123')
-        response = client_obj.get('/menu/')
+        response = client_obj.get(reverse('menu_page'))
         self.assertEqual(response.status_code, 200)
 
     def test_menu_login_neg(self):
         client_obj = Client()
-        response = client_obj.get('/menu/')
+        response = client_obj.get(reverse('menu_page'))
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/login/?next=/menu/')

@@ -8,7 +8,7 @@
     <h1>{{ object.title }}</h1>
     <p>Keys: {{ object.keys }}</p>
     <p>Body: {{ object.text_body }}</p>
-    <form method="POST" action="{% url "del_note" pk=object.pk %}">
+    <form method="POST" action="{% url "note_del" pk=object.pk %}">
    {% csrf_token %}<input type="submit" value="DELETE">
 </form>
 </body>
