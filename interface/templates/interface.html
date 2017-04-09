@@ -1,22 +1,23 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Базовая страница</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 </head>
 <body>
-<form action="" method="post">
-    {% csrf_token %}
-    <label for="common_interface_field"></label>
-    {% if user_name %}
-        <input type="password" name="main_field" maxlength="50">
-        <input type="hidden" value={{ user_name }} name="ex_user_name" >
-    {% else %}
-        <input type="text" name="main_field" maxlength="50">
-    {% endif %}
-    <p>
+<div class="cent">
+    <form action="" method="post">
+        {% csrf_token %}
+        {% if user_name %}
+            <input type="password" name="main_field" maxlength="50">
+            <input type="hidden" value={{ user_name }} name="ex_user_name" >
+        {% else %}
+            <input type="text" name="main_field" maxlength="50">
+        {% endif %}
         <input type="submit" value="Enter">
-    </p>
-</form>
+    </form>
+</div>
 </body>
 </html>
