@@ -4,7 +4,7 @@ from django.views.generic import FormView, TemplateView, View, CreateView
 from .models import Reminder, ToDoList, TimeManage
 from interface.models import OrdinaryUser
 
-
+'''
 class RemiderView(LoginRequiredMixin, CreateView):
     template_name = 'remider.html'
     model = Reminder
@@ -28,3 +28,4 @@ class ToDoListView(LoginRequiredMixin, CreateView):
         form.instance.customer = OrdinaryUser.objects.get(username=self.request.user)
         form.instance.note = self.request.POST['note']
         return super(ToDoListView, self).form_valid(form)
+'''

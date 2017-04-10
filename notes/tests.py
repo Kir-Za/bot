@@ -4,19 +4,19 @@ from django.core.urlresolvers import reverse_lazy
 from interface.models import OrdinaryUser
 from .models import MyNote
 
-test_user = 'Dummy'
-test_password = '123'
+TEST_USER = 'Dummy'
+TEST_PASSWORD = '123'
 
 
 class NotesViewTest(TestCase):
     def test_client(self):
         client_obj = Client()
         with transaction.atomic():
-            client_obj.login(username=test_user, password=test_password)
+            client_obj.login(username=TEST_USER, password=TEST_PASSWORD)
         return client_obj
 
     def setUp(self):
-        user = OrdinaryUser.objects.create_user(username=test_user, password=test_password)
+        user = OrdinaryUser.objects.create_user(username=TEST_USER, password=TEST_PASSWORD)
         MyNote.objects.create(customer=user, title='Base note', keys='base', text_body='Add base note')
 
     def test_add_note_pos(self):

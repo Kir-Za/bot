@@ -6,7 +6,7 @@ from interface.models import OrdinaryUser
 
 class InterfaceViewTest(TestCase):
     def setUp(self):
-        user = OrdinaryUser.objects.create_user(username='Dummy', password='123')
+        OrdinaryUser.objects.create_user(username='Dummy', password='123')
 
     def test_main_view_neg(self):
         client_obj = Client()

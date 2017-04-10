@@ -3,9 +3,9 @@ from django.views.generic import FormView, ListView, CreateView, DetailView, Del
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, reverse
 from django.core.urlresolvers import reverse_lazy
+from interface.models import OrdinaryUser
 from .models import MyNote
 from .forms import SearchForm
-from interface.models import OrdinaryUser
 
 
 class SearchAPI(LoginRequiredMixin, FormView):

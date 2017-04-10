@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .froms import FaceForm
 from .models import OrdinaryUser
 
-file_logger = getLogger('gal_logger')
+FILE_LOGGER = getLogger('gal_logger')
 
 
 class MainView(FormView):
@@ -25,7 +25,7 @@ class MainView(FormView):
                 except ObjectDoesNotExist:
                     return redirect(reverse('login_page'))
                 except Exception as err:
-                    file_logger.error(err)
+                    FILE_LOGGER.error(err)
             else:
                 name = request.POST['ex_user_name']
                 pswd = form.cleaned_data['main_field']
