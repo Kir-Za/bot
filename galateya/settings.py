@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # aditional app
+    'bootstrap3',
 
     # project application
     'interface',
