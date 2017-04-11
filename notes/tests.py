@@ -42,11 +42,6 @@ class NotesViewTest(TestCase):
         response = client_obj.get(reverse_lazy('note_list', args=['last']))
         self.assertEqual(response.status_code, 200)
 
-    def test_serch_api(self):
-        client_obj = self.test_client()
-        resopnse = client_obj.post(reverse_lazy('serach_api'), {'search_field': 'test'})
-        self.assertEqual(resopnse.status_code, 302)
-
     def test_note_detail_pos(self):
         client_obj = self.test_client()
         note = MyNote.objects.all()[0]

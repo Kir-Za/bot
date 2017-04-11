@@ -8,28 +8,16 @@ from .models import MyNote
 from .forms import SearchForm
 
 
-class SearchAPI(LoginRequiredMixin, FormView):
-    form_class = SearchForm
-
-    def post(self, request):
-        form = SearchForm(request.POST)
-        if form.is_valid():
-            search_key = form.cleaned_data['search_field']
-            return redirect(reverse('note_list', kwargs={'keys': search_key}))
-        else:
-            return redirect('note_list', kwargs={'keys': 'last'})
-
-
 class CommonNoteView(LoginRequiredMixin, ListView):
-    template_name = 'work_space.html'
+    template_name = 'common_view.html'
     context_object_name = 'note_list'
     queryset = MyNote.objects.order_by('-time_add')
 
     def get_queryset(self):
-        if self.kwargs['keys'] == 'last':
+        if len(self.request.GET) == 0:
             return MyNote.objects.order_by('-time_add')
         else:
-            keys_list = self.kwargs['keys'].split(' ')
+            keys_list = self.request.GET['find'].split(' ')
             search = []
             for element in keys_list:
                 search.append('Q(keys__contains="'+element+'")|')
@@ -40,10 +28,10 @@ class CommonNoteView(LoginRequiredMixin, ListView):
 
 
 class AddNoteView(LoginRequiredMixin, CreateView):
-    template_name = 'remider.html'
+    template_name = 'add_note.html'
     model = MyNote
     fields = ['title', 'keys', 'text_body']
-    success_url = reverse_lazy('note_list', kwargs={'keys': 'last'})
+    success_url = reverse_lazy('note_list')  # , kwargs={'keys': 'last'})
 
     def form_valid(self, form):
         form.instance.customer = OrdinaryUser.objects.get(username=self.request.user)
@@ -60,4 +48,4 @@ class DeatilNoteView(LoginRequiredMixin, DetailView):
 
 class RemoveNoteView(LoginRequiredMixin, DeleteView):
     model = MyNote
-    success_url = reverse_lazy('note_list', kwargs={'keys': 'last'})
+    success_url = reverse_lazy('note_list')  # , kwargs={'keys': 'last'})

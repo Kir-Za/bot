@@ -33,7 +33,7 @@ class MainView(FormView):
                 if user is not None:
                     if user.is_active:
                         login(request, user)
-                        return redirect(reverse('note_list', kwargs={'keys': 'last'}))
+                        return redirect(reverse('note_list'))
                 else:
                     return redirect(reverse('login_page'))
         return redirect(reverse('login_page'))

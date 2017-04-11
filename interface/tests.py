@@ -22,16 +22,16 @@ class InterfaceViewTest(TestCase):
     def test__main_view_pos_next(self):
         client_obj = Client()
         response = client_obj.post(reverse_lazy('login_page'), {'main_field': '123', 'ex_user_name': 'Dummy'})
-        self.assertEqual(response.url, reverse('menu_page'))
+        self.assertEqual(response.url, reverse('note_list'))
 
     def test_menu_login_pos(self):
         client_obj = Client()
         with transaction.atomic():
             client_obj.login(username='Dummy', password='123')
-        response = client_obj.get(reverse('menu_page'))
+        response = client_obj.get(reverse('note_list'))
         self.assertEqual(response.status_code, 200)
 
     def test_menu_login_neg(self):
         client_obj = Client()
-        response = client_obj.get(reverse('menu_page'))
+        response = client_obj.get(reverse('note_list'))
         self.assertEqual(response.status_code, 302)
