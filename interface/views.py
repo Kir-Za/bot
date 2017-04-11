@@ -33,20 +33,10 @@ class MainView(FormView):
                 if user is not None:
                     if user.is_active:
                         login(request, user)
-                        return redirect(reverse('menu_page'))
+                        return redirect(reverse('note_list', kwargs={'keys': 'last'}))
                 else:
                     return redirect(reverse('login_page'))
         return redirect(reverse('login_page'))
-
-
-class MenuView(LoginRequiredMixin, TemplateView):
-    template_name = "menu.html"
-    login_url = 'login_page'
-
-    def get_context_data(self, **kwargs):
-        context = super(MenuView, self).get_context_data(**kwargs)
-        context['points'] = {'note': 'Заметки'}
-        return context
 
 
 class LogoutView(View):

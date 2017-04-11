@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% block content %}
 <form action="{% url "serach_api" %}" method="post">
     {% csrf_token %}
     <label for="common_interface_field"></label>
@@ -18,5 +12,4 @@
 <form action="{% url "note_add" %}">
     <button type="submit">ADD</button>
 </form>
-</body>
-</html>
+{% endblock %}
